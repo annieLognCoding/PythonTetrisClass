@@ -103,3 +103,40 @@ def ct3(a):
     return result
 
 print(ct3(range(2, 6))) #[2, 1, 4, 1, 5]
+
+###String 2 Problems
+def count_hi(str):
+  count = 0
+  for i in range(0, len(str) - 1):
+    if str[i:i+2] == 'hi':
+      count+=1
+  return count
+
+def double_char(str):
+  result = ""
+  for i in str:
+    result += i*2
+  return result
+
+def xyz_there(str):
+  for i in range(0, len(str) - 2):
+    if(str[i:i+3] == "xyz" and (i == 0 or str[i-1] != ".")): return True
+  return False
+
+###List 2 Problems
+def has22(nums):
+  for i in range(0, len(nums) - 1):
+    if(nums[i] == 2 and nums[i+1] == 2): return True
+  return False
+
+def centered_average(nums):
+  min = nums[0]
+  max = nums[0]
+  sum = 0
+  for i in nums:
+    if(i < min): min = i
+    if(i > max): max = i
+    sum += i
+  
+  return (sum - min - max)/(len(nums) - 2)
+
