@@ -93,11 +93,26 @@ pygame.draw.rect(DISPLAYSURF, RED, (200, 150, 100, 50))
 
 pixObj = pygame.PixelArray(DISPLAYSURF)
 
+#pygame.PixelArray Objects
+"""
+    To draw a point on your surface, 
+    create a pygame.PixelArray object of a Surface object and then set individual pixels
+
+        !!Creating a PixelArray object of a Surface object will “lock” the Surface object!!
+        If you want to see if a Surface object is locked, 
+        the get_locked() Surface method will return True if it is locked and False if it is not.
+
+    The PixelArray object that is returned from pygame.PixelArray() can have individual pixels set by accessing them with two indexes. 
+
+    To tell Pygame that you are finished drawing individual pixels, delete the PixelArray object with a del statement.
+"""
+
 pixObj[480][380] = BLACK
 pixObj[482][382] = BLACK
 pixObj[484][384] = BLACK
 pixObj[486][386] = BLACK
 pixObj[488][388] = BLACK
+pixObj[250][200] = BLACK
 
 del pixObj
 # run the game loop
@@ -107,4 +122,13 @@ while True:
             pygame.quit()
             sys.exit()
     pygame.display.update()
+
+#pygame.display.update() 
+"""
+    After you are done drawing on the surface,
+    You must call pygame.display.update() to make the display Surface actually appear on the user’s monitor.
+
+    The one thing that you must remember is that pygame.display.update() will only make the display Surface 
+    (that is, the Surface object that was returned from the call to pygame.display.set_mode()) appear on the screen. 
+"""
 

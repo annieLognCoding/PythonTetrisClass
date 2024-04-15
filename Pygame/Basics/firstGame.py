@@ -40,7 +40,7 @@ while run:
     if keys[pygame.K_DOWN] and y < 500 - height:
         y = y + vel
 
-    #redraw rectangle here
+    #fill the window here
     win.fill((0, 0, 0))
     #rect(surface, color, rect)
     pygame.draw.rect(win, (255, 0, 0), (x, y, width, height))
