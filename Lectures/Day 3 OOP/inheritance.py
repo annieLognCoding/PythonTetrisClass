@@ -116,11 +116,11 @@ class Student(Person):
     def __init__(self, name, age, grades):
         self.name = name
         self.age = age
-        self.grade = 33
+        self.grade = sum(grades) / len(grades)
     def getOlder(self):
         super().getOlder()
-        print(self.age)
+        return self.age
 
 
-Ron = Student("Ron", 5, 22)
-print(Ron.grade)
+Ron = Student("Ron", 5, [22, 33])
+print(Ron.getOlder())
