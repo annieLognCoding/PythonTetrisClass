@@ -4,22 +4,25 @@ class Dog:
     type = "mammal"
 
     # Instance attribute
-    def __init__(self, name):
+    def __init__(self, name, age):
         self.name = name
+        self.age = age
         
     def speak(self):
-        print("My name is {}".format(self.name))
+        print("My name is {}".format(self.name)) 
+        #f"My name is {self.name}"
 
     def eat(self, snack):
-        print(f'I am eating {snack}')
+        print(f'{self.name} is eating {snack}')
 
 # Driver code
 # Object instantiation
-Rodger = Dog("Rodger")
-Tommy = Dog("Tommy")
-print(Dog.type)
+Rodger = Dog("Rodger", 3)
+Tommy = Dog("Annie", 5)
+
+Tommy.speak()
 
 # Accessing class methods
 Rodger.speak()
 Tommy.speak()
-Tommy.eat("biscuits")
+Rodger.eat("biscuits")

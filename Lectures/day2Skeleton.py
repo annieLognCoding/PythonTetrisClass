@@ -140,27 +140,27 @@
 # print(reverseDigits(1234))
 # assert(reverseDigits(7265) == 5627)
 
-"""
+
 # nth positive integer with some property
 # eg: find the nth number that is a multiple of either 4 or 7
-def isMultipleOf4or7(x):
-    return ((x % 4) == 0) or ((x % 7) == 0)
+# def isMultipleOf4or7(x):
+#     return ((x % 4) == 0) or ((x % 7) == 0)
+ 
+# def func7(n):
+#     found = 0
+#     guess = -1
+#     #Why do we use while loop here?
+#     while (found <= n):
+#         guess += 1
+#         if (isMultipleOf4or7(guess)):
+#             found = found + 1
+#     return guess
 
-def func7(n):
-    found = 0
-    guess = -1
-    #Why do we use while loop here?
-    while (found <= n):
-        guess += 1
-        if (isMultipleOf4or7(guess)):
-            found += 1
-    return guess
+# print("Multiples of 4 or 7: ", end="")
+# for n in range(5): #0 1 2 3 4
+#     print(func7(n), end=" ")
+# print()
 
-print("Multiples of 4 or 7: ", end="")
-for n in range(15):
-    print(func7(n), end=" ")
-print()
-"""
 ## Can you identify the bug?
 
 # def buggySumToN(n):
@@ -178,30 +178,30 @@ print()
 
 
 # break and continue
-for n in range(200):
-    if (n % 3 == 0):
-        continue # skips rest of this pass (rarely a good idea to use "continue")
-    elif (n == 8):
-        break # skips rest of entire loop
-    print(n, end=" ")
-print()
+# for n in range(200):
+#     if (n % 3 == 0):
+#         continue # skips rest of this pass (rarely a good idea to use "continue")
+#     elif (n == 8):
+#         break # skips rest of entire loop
+#     print(n, end=" ")
+# print()
 
 #isPrime
 
 # Note: there are faster/better ways.  We're just going for clarity and simplicity here.
-def func8(n):
-    if (n < 2):
-        return False
-    for factor in range(2,n):
-        if (n % factor == 0):
-            return False
-    return True
+# def func8(n):
+#     if (n < 2):
+#         return False
+#     for factor in range(2,n):
+#         if (n % factor == 0):
+#             return False
+#     return True
 
-# And take it for a spin
-for n in range(100):
-    if func8(n):
-        print(n, end=" ")
-print()
+# # And take it for a spin
+# for n in range(100):
+#     if func8(n):
+#         print(n, end=" ")
+# print()
 """
 #fasterisPrime
 #Note: this is still not the fastest way, but it's a nice improvement.
