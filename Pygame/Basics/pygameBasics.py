@@ -29,18 +29,17 @@ while True:
     for event in pygame.event.get():
          if event.type == QUIT:
              pygame.quit() #deactivates the Pygame library
+             """
+                Any time the user does something, 
+                a pygame.event.Event object is created by the Pygame library to record this “event”
+                "print(event)" to find out what happens
+                >> type property: what kind of even the object represents
+                    >> there is a constant variable for each of the possible types in the pygame.locals modules 
+            """
              sys.exit()
-
+            #pygame.event.Event Objects
+         
     pygame.display.update()
-"""
-    update draws the Surface object returned by pygame.display.set_mode() to the screen
-"""
-
-#pygame.event.Event Objects
-"""
-    Any time the user does something, 
-    a pygame.event.Event object is created by the Pygame library to record this “event”
-    "print(event)" to find out what happens
-    >> type property: what kind of even the object represents
-        >> there is a constant variable for each of the possible types in the pygame.locals modules 
-"""
+    """
+        update draws the Surface object returned by pygame.display.set_mode() to the screen
+    """
