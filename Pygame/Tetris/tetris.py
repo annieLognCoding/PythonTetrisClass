@@ -231,7 +231,7 @@ def start():
     go_next_block(INTERVAL)
 
 pygame.init()
-pygame.key.set_repeat(150, 300)
+pygame.key.set_repeat(200, 300)
 SURFACE = pygame.display.set_mode([600, 600])
 FPSCLOCK = pygame.time.Clock()
 WIDTH = 12
@@ -275,7 +275,7 @@ def main():
             paused = not paused
         if key == K_r:
             print("reset")
-            reset()
+            start()
                 
         game_over = is_game_over()
         if not game_over and not paused:
