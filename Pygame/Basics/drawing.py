@@ -17,15 +17,19 @@ pygame.init()
 spamRect = pygame.Rect(10, 20, 200, 300)
 print(spamRect == (10, 20, 200, 300))
 
-def intCollide(a_Start, a_End, b_Start, b_End):
-    return a_Start <= b_End and b_Start <= a_End
-
 def collide(Rect1, Rect2):
-    (tlX1, tlY1, width1, height1) = Rect1 
-    (tlX2, tlY2, width2, height2) = Rect2 
-    return ((intCollide(tlX1, tlX1 + width1, tlX2, tlX2 + width2))
-       and (intCollide(tlY1, tlY1 + height1, tlY2, tlY2 + height2)))
-    
+    (topLeftX1, topLeftY1, width1, height1) = Rect1
+    (topLeftX2, topLeftY2, width2, height2) = Rect2
+
+    sX1, eX1 = topLeftX1, topLeftX1 + width1
+    sY1, eY1 = topLeftY1, topLeftY1 + height1
+    sX2, eX2 = topLeftX2, topLeftX2 + width2
+    sY2, eY2 = topLeftY2, topLeftY2 + height2
+
+    if(sX2 <= eX1 and sX1 <= eX2 and sY2 <= eY1 and sY1 <= eY2):
+        return True
+
+    return False
 
 """
 Why would we use the Rect object?
@@ -88,10 +92,10 @@ pygame.draw.polygon(DISPLAYSURF, GREEN, ((146, 0), (291, 106), (236, 277), (56, 
 pygame.draw.line(DISPLAYSURF, BLUE, (60, 60), (120, 60), 4)
 pygame.draw.line(DISPLAYSURF, BLUE, (120, 60), (60, 120))
 pygame.draw.line(DISPLAYSURF, BLUE, (60, 120), (120, 120), 4)
-"""
-    pygame.draw.line(surface, color, start_point, end_point, width)
-        This function draws a line between the start_point and end_point parameters
-"""
+# """
+#     pygame.draw.line(surface, color, start_point, end_point, width)
+#         This function draws a line between the start_point and end_point parameters
+# """
 
 pygame.draw.circle(DISPLAYSURF, BLUE, (300, 50), 20, 0)
 #pygame.draw.circle(surface, color, center_point, radius, width)
@@ -117,14 +121,14 @@ pixObj = pygame.PixelArray(DISPLAYSURF)
     To tell Pygame that you are finished drawing individual pixels, delete the PixelArray object with a del statement.
 """
 
-pixObj[480][380] = BLACK
-pixObj[482][382] = BLACK
-pixObj[484][384] = BLACK
-pixObj[486][386] = BLACK
-pixObj[488][388] = BLACK
-pixObj[250][200] = BLACK
+# pixObj[480][380] = BLACK
+# pixObj[482][382] = BLACK
+# pixObj[484][384] = BLACK
+# pixObj[486][386] = BLACK
+# pixObj[488][388] = BLACK
+# pixObj[250][200] = BLACK
 
-del pixObj
+# del pixObj
 
 pygame.display.update()
 
@@ -134,6 +138,7 @@ while True:
         if event.type == QUIT:    
             pygame.quit()
             sys.exit()
+    pygame.display.update()
 
 #pygame.display.update() 
 """
