@@ -17,6 +17,16 @@ pygame.init()
 spamRect = pygame.Rect(10, 20, 200, 300)
 print(spamRect == (10, 20, 200, 300))
 
+def intCollide(a_Start, a_End, b_Start, b_End):
+    return a_Start <= b_End and b_Start <= a_End
+
+def collide(Rect1, Rect2):
+    (tlX1, tlY1, width1, height1) = Rect1 
+    (tlX2, tlY2, width2, height2) = Rect2 
+    return ((intCollide(tlX1, tlX1 + width1, tlX2, tlX2 + width2))
+       and (intCollide(tlY1, tlY1 + height1, tlY2, tlY2 + height2)))
+    
+
 """
 Why would we use the Rect object?
 
@@ -115,13 +125,15 @@ pixObj[488][388] = BLACK
 pixObj[250][200] = BLACK
 
 del pixObj
+
+pygame.display.update()
+
 # run the game loop
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:    
             pygame.quit()
             sys.exit()
-    pygame.display.update()
 
 #pygame.display.update() 
 """
@@ -131,4 +143,3 @@ while True:
     The one thing that you must remember is that pygame.display.update() will only make the display Surface 
     (that is, the Surface object that was returned from the call to pygame.display.set_mode()) appear on the screen. 
 """
-
