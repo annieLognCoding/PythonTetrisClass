@@ -5,7 +5,7 @@ from random import randint
 import pygame
 from pygame.locals import QUIT, KEYDOWN, \
     K_LEFT, K_RIGHT, K_DOWN, K_UP, K_SPACE, \
-    K_c
+    K_c, K_p, K_r
 
 BLOCK_DATA = (
     (
@@ -216,17 +216,30 @@ def is_overlapped(xpos, ypos, turn):
                         return True
     return False
 
+def start():
+    global BLOCK, NEXT_BLOCK, INTERVAL, FIELD
+    BLOCK = None
+    NEXT_BLOCK = None
+    INTERVAL = 40
+    FIELD = [[0 for _ in range(WIDTH)] for _ in range(HEIGHT)]
+    for i in range(HEIGHT):
+        FIELD[i][0] = 8
+        FIELD[i][WIDTH - 1] = 8
+        
+    for x in range(WIDTH):
+        FIELD[HEIGHT - 1][x] = 8
+    go_next_block(INTERVAL)
 
 pygame.init()
-pygame.key.set_repeat(200, 200)
+pygame.key.set_repeat(150, 300)
 SURFACE = pygame.display.set_mode([600, 600])
 FPSCLOCK = pygame.time.Clock()
 WIDTH = 12
 HEIGHT = 22
 INTERVAL = 40
 FIELD = [[0 for _ in range(WIDTH)] for _ in range(HEIGHT)]
-COLORS = ((0, 0, 0), (255, 165, 0), (0, 0, 255), (0, 255, 255), \
-          (0, 255, 0), (255, 0, 255), (255, 255, 0), (255, 0, 0), (128, 128, 128))
+COLORS = ((128, 128, 128), (255, 165, 0), (0, 0, 255), (0, 255, 255), \
+          (0, 255, 0), (255, 0, 255), (255, 255, 0), (255, 0, 0), (0, 128, 0))
 BLOCK = None
 NEXT_BLOCK = None
 
@@ -239,22 +252,15 @@ def main():
     largefont = pygame.font.SysFont(None, 72)
     message_over = largefont.render("GAME OVER!!",
                                     True, (0, 255, 225))
+    message_paused = largefont.render("PAUSED",
+                                    True, (0, 255, 225))
     message_rect = message_over.get_rect()
     message_rect.center = (300, 300)
     hard_drop = False
-    
-    go_next_block(INTERVAL)
-    
-    #create the empty FIELD
-    for i in range(HEIGHT):
-        FIELD[i][0] = 8
-        FIELD[i][WIDTH - 1] = 8
-        
-    for x in range(WIDTH):
-        FIELD[HEIGHT - 1][x] = 8
-    
-    print(FIELD)
+    paused = False
 
+    start()
+    
     while True:
         
         #get player key
@@ -265,9 +271,14 @@ def main():
                 sys.exit()
             elif event.type == KEYDOWN:
                 key = event.key
+        if key == K_p:
+            paused = not paused
+        if key == K_r:
+            print("reset")
+            reset()
                 
         game_over = is_game_over()
-        if not game_over:
+        if not game_over and not paused:
             hard_drop = False
             count += 5
             if count % 1000 == 0: #speed up the game every second
@@ -312,7 +323,7 @@ def main():
                 score += (2 ** erased) * 100
 
         # DRAW FIELD AND BLOCK
-        SURFACE.fill((0, 0, 0))
+        SURFACE.fill((0,0,0))
         for ypos in range(HEIGHT):
             for xpos in range(WIDTH):
                 val = FIELD[ypos][xpos]
@@ -324,7 +335,8 @@ def main():
         for ypos in range(NEXT_BLOCK.size):
             for xpos in range(NEXT_BLOCK.size):
                 val = NEXT_BLOCK.data[xpos + ypos*NEXT_BLOCK.size]
-                pygame.draw.rect(SURFACE, COLORS[val],
+                color = (0, 0, 0) if val == 0 else COLORS[val]
+                pygame.draw.rect(SURFACE, color,
                                  (xpos*25 + 460, ypos*25 + 100, 24, 24))
 
         # SHOW SCORE
@@ -335,7 +347,8 @@ def main():
 
         if game_over:
             SURFACE.blit(message_over, message_rect)
-
+        if paused:
+            SURFACE.blit(message_paused, message_rect)
         pygame.display.update()
         FPSCLOCK.tick(15)
 
