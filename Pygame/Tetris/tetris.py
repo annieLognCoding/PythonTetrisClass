@@ -161,6 +161,18 @@ class Block:
                     y_pos = 25 + (y_offset + self.ypos) * 25
                     pygame.draw.rect(SURFACE, COLORS[val], 
                                      (x_pos, y_pos, 24, 24))
+    
+    def draw_outline(self, y_limit):
+        for index in range(len(self.data)):
+            x_offset = index % self.size
+            y_offset = index // self.size
+            val = self.data[index]
+            if 0 <= self.xpos + x_offset < WIDTH and \
+                 0 <= y_limit + y_offset < HEIGHT and val != 0:
+                    x_pos = 25 + (x_offset + self.xpos) * 25
+                    y_pos = 25 + (y_limit + self.ypos) * 25
+                    pygame.draw.rect(SURFACE, (0, 0, 200), 
+                                     (x_pos, y_pos, 24, 24), 2)
                     
 
 def erase_line():
@@ -284,8 +296,6 @@ def main():
             if count % 1000 == 0: #speed up the game every second
                 INTERVAL = max(1, INTERVAL - 2)
             erased = BLOCK.update(count)
-
-            
             # event handling
             
             if key == K_c:
@@ -322,14 +332,21 @@ def main():
             if erased > 0:
                 score += (2 ** erased) * 100
 
+        outline = True
+        y_limit = -1
         # DRAW FIELD AND BLOCK
         SURFACE.fill((0,0,0))
-        for ypos in range(HEIGHT):
+        for ypos in range(HEIGHT-1, -1, -1):
             for xpos in range(WIDTH):
                 val = FIELD[ypos][xpos]
                 pygame.draw.rect(SURFACE, COLORS[val],
                                  (xpos*25 + 25, ypos*25 + 25, 24, 24))
+                # if(ypos < HEIGHT - 2 and not is_overlapped(BLOCK.xpos, ypos, BLOCK.turn) and outline):
+                #     y_limit = ypos
+                #     outline = False
         BLOCK.draw()
+        # BLOCK.draw_outline(y_limit)
+
 
         # DRAW NEXT BLOCK
         for ypos in range(NEXT_BLOCK.size):
