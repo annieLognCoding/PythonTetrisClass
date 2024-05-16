@@ -170,7 +170,7 @@ class Block:
             if 0 <= self.xpos + x_offset < WIDTH and \
                  0 <= y_limit + y_offset < HEIGHT and val != 0:
                     x_pos = 25 + (x_offset + self.xpos) * 25
-                    y_pos = 25 + (y_limit + self.ypos) * 25
+                    y_pos = 25 + (y_limit + y_offset) * 25
                     pygame.draw.rect(SURFACE, (0, 0, 200), 
                                      (x_pos, y_pos, 24, 24), 2)
                     
@@ -221,11 +221,15 @@ def is_overlapped(xpos, ypos, turn):
         x_offset = index % BLOCK.size
         y_offset = index // BLOCK.size
         val = data[index]
-        if 0 <= BLOCK.xpos + x_offset < WIDTH and \
-            0 <= BLOCK.ypos + y_offset < HEIGHT:
-               if val != 0 and \
-                    FIELD[ypos+y_offset][xpos+x_offset] != 0:
-                        return True
+        try:
+            if 0 <= BLOCK.xpos + x_offset < WIDTH and \
+                0 <= BLOCK.ypos + y_offset < HEIGHT:
+                if val != 0 and \
+                        FIELD[ypos+y_offset][xpos+x_offset] != 0:
+                            return True
+        except:
+            return True
+        
     return False
 
 def start():
@@ -332,21 +336,23 @@ def main():
             if erased > 0:
                 score += (2 ** erased) * 100
 
-        outline = True
         y_limit = -1
+        outline = True
         # DRAW FIELD AND BLOCK
         SURFACE.fill((0,0,0))
-        for ypos in range(HEIGHT-1, -1, -1):
+        for ypos in range(HEIGHT):
             for xpos in range(WIDTH):
                 val = FIELD[ypos][xpos]
                 pygame.draw.rect(SURFACE, COLORS[val],
                                  (xpos*25 + 25, ypos*25 + 25, 24, 24))
-                # if(ypos < HEIGHT - 2 and not is_overlapped(BLOCK.xpos, ypos, BLOCK.turn) and outline):
-                #     y_limit = ypos
-                #     outline = False
-        BLOCK.draw()
-        # BLOCK.draw_outline(y_limit)
+                if(is_overlapped(BLOCK.xpos, ypos, BLOCK.turn) and outline):
+                    y_limit = ypos - 1
+                    outline = False
 
+        if(outline):
+            y_limit = HEIGHT - BLOCK.size - 1
+        BLOCK.draw()
+        BLOCK.draw_outline(y_limit)
 
         # DRAW NEXT BLOCK
         for ypos in range(NEXT_BLOCK.size):
