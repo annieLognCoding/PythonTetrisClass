@@ -1,5 +1,6 @@
 import pygame
 import random
+from pygame import locals
 
 # Initialize Pygame
 pygame.init()
@@ -42,8 +43,13 @@ score = 0
 def move_basket(basket, window_width, basket_speed):
     basket_speed = 5
     keys = pygame.key.get_pressed()
+
+    if keys[pygame.K_RIGHT] and basket.x + basket_width < window_width:
+        basket.x += basket_speed
+    if keys[pygame.K_LEFT] and basket.x > 0:
+        basket.x -= basket_speed
+
     
-    # Step 1: Move the basket (left and right) based on key presses (LEFT and RIGHT arrow keys).
     # Step 2: Ensure the basket stays within the game window.
 
     pass
@@ -51,27 +57,30 @@ def move_basket(basket, window_width, basket_speed):
 def main():
     global score
     running = True
+    gameOver = False
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-        # Move the basket
-        move_basket(basket, window_width, basket_speed)
+        if(not gameOver):
+            # Move the basket
+            move_basket(basket, window_width, basket_speed)
 
-        # Move the falling object
-        falling_object.y += object_speed
+            # Move the falling object
+            falling_object.y += object_speed
 
-        # Check if the object hit the basket
-        if falling_object.colliderect(basket):
-            score += 1
-            falling_object.x = random.randint(0, window_width - object_width)
-            falling_object.y = 0
+            # Check if the object hit the basket
+            if falling_object.colliderect(basket):
+                score += 1
+                falling_object.x = random.randint(0, window_width - object_width)
+                falling_object.y = 0
 
-        # Check if the object hit the ground
-        if falling_object.y > window_height:
-            falling_object.x = random.randint(0, window_width - object_width)
-            falling_object.y = 0
+            # Check if the object hit the ground
+            if falling_object.y > window_height:
+                falling_object.x = random.randint(0, window_width - object_width)
+                falling_object.y = 0
+                gameOver = True
 
         # Clear the screen
         screen.fill(BLACK)
@@ -87,6 +96,13 @@ def main():
         score_text = font.render(f'Score: {score}', True, WHITE)
         screen.blit(score_text, (10, 10))
 
+        if(gameOver):
+            game_over_font = pygame.font.SysFont(None, 64)
+            game_over_text = game_over_font.render('Game Over!!', True, RED)
+            game_over_rect = game_over_text.get_rect()
+            score_rect = score_text.get_rect()
+            screen.blit(game_over_text, (window_width // 2 - game_over_rect.width // 2, window_height // 2 - game_over_rect.height // 2))
+            screen.blit(score_text, (window_width // 2 - score_rect.width // 2, window_height // 2 + game_over_rect.height + 5))
         # Update the display
         pygame.display.flip()
 
