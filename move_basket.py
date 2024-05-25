@@ -48,8 +48,6 @@ def move_basket(basket, window_width, basket_speed):
         basket.x += basket_speed
     if keys[pygame.K_LEFT] and basket.x > 0:
         basket.x -= basket_speed
-
-    
     # Step 2: Ensure the basket stays within the game window.
 
     pass
