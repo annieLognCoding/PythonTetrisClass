@@ -83,7 +83,11 @@ def main():
         # Draw the bricks
         for brick in bricks:
             pygame.draw.rect(screen, BLUE, brick)
+        
         # Draw the score
+        font = pygame.font.SysFont(None, 36)
+        score_text = font.render(f'Score: {score}', True, WHITE)
+        screen.blit(score_text, (10, 10))
 
         # Update the display
         pygame.display.update()
