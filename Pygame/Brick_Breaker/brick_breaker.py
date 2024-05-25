@@ -49,6 +49,7 @@ score = 0
 def main():
     global score, ball_speed_x, ball_speed_y
     running = True
+    paused = False
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -60,6 +61,8 @@ def main():
             paddle.x -= paddle_speed
         if keys[pygame.K_RIGHT]:
             paddle.x += paddle_speed
+        if keys[pygame.K_p]:
+            paused = not paused
 
         # Ensure the paddle stays within the window boundaries
         if paddle.x < 0:
@@ -67,9 +70,10 @@ def main():
         if paddle.x > window_width - paddle.width:
             paddle.x = window_width - paddle.width
 
-        # Move the ball
-        ball.x += ball_speed_x
-        ball.y += ball_speed_y
+        if not paused:
+            # Move the ball
+            ball.x += ball_speed_x
+            ball.y += ball_speed_y
 
         # Ball collision with walls
         if ball.x <= 0 or ball.x >= window_width - ball.width:
