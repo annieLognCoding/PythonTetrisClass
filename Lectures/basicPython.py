@@ -99,3 +99,58 @@ def linear_in(outer, inner):
 print(linear_in([1, 2, 4, 6], [2, 4])) 
 print(linear_in([1, 2, 4, 6], [2, 3, 4]))
 print(linear_in([1, 2, 4, 4, 6], [2, 6])) 
+
+"""1. Reading Code"""
+
+# Please write what the following code will print out in the terminal.
+def func_1(n):
+    result = []
+    for i in range(1, n + 1):
+        for j in range(1, i + 1):
+            result.append(j)
+    return result
+
+# Test cases
+print(func_1(3))
+print(func_1(4))
+print(func_1(0))
+print(func_1(1))
+print(func_1(5))
+
+def func_2(arr):
+    max_length = 0
+    for i in range(len(arr)):
+        for j in range(len(arr)):
+            length = 0
+            while i + length < len(arr) and j - length >= 0 and arr[i + length] == arr[j - length]:
+                length += 1
+            max_length = max(max_length, length)
+    return max_length
+
+# Test cases
+print(func_2([1, 2, 3, 8, 9, 3, 2, 1]))
+print(func_2([7, 1, 2, 9, 7, 2, 1]))
+print(func_2([1, 2, 1, 4]))
+print(func_2([1, 4, 5, 3, 5, 4, 1]))
+print(func_2([1, 2, 3, 2, 1]))
+
+def func_3(arr):
+    clumps = 0
+    i = 0
+    while i < len(arr):
+        count = 1
+        while i + 1 < len(arr) and arr[i] == arr[i + 1]:
+            count += 1
+            i += 1
+        if count > 1:
+            clumps += 1
+        i += 1
+    return clumps
+
+# Test cases
+print(func_3([1, 2, 2, 3, 4, 4]))
+print(func_3([1, 1, 2, 1, 1]))
+print(func_3([1, 1, 1, 1, 1]))
+print(func_3([1, 2, 3]))
+print(func_3([2, 2, 3, 4, 4, 4]))
+
